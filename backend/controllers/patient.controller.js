@@ -2,7 +2,10 @@ const Patient = require("../models/patient.model");
 
 const readPatientsHandler = async (req, res) => {
   try {
-    const patients = await Patient.find({});
+    const patients = await Patient.find({}).populate({
+      path: "ward",
+      select: "ward_number",
+    });
     if (!patients) {
       return res
         .status(404)
@@ -96,5 +99,5 @@ module.exports = {
   readPatientsHandler,
   createPatientHandler,
   editPatientHandler,
-  deletePatientHandler
+  deletePatientHandler,
 };
