@@ -14,6 +14,12 @@ const patientSchema = new mongoose.Schema(
       required: true,
       enum: ["Male", "Female"],
     },
+    medical_history: {
+      type: String,
+    },
+    contact: {
+      type: String,
+    },
     ward: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Ward",

@@ -32,6 +32,7 @@ const createPatientHandler = async (req, res) => {
         .json({ success: false, message: "patient not created." });
     }
     await newPatient.save();
+    await newPatient.populate({ path: "ward", select: "ward_number" });
     return res.status(201).json({
       success: true,
       message: "patient created.",
@@ -50,6 +51,7 @@ const editPatientHandler = async (req, res) => {
   try {
     const { patientId } = req.params;
     const updatedData = req.body;
+     
     const patientFound = await Patient.findById(patientId);
     if (!patientFound) {
       return res
@@ -61,6 +63,7 @@ const editPatientHandler = async (req, res) => {
       updatedData,
       { new: true }
     );
+    
     return res.status(200).json({
       success: true,
       message: "Patient updated.",
